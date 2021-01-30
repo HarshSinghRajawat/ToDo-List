@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
     private DataHelper mhelper=new DataHelper(this);
 
@@ -22,6 +24,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        DataHelper helper=new DataHelper(this);
+        SQLiteDatabase db=helper.getReadableDatabase();
+        String[] projection={Schema.entries._ID, Schema.entries.title, Schema.entries.Entry};
+        Cursor cursor=db.query(Schema.entries.Table_Name,projection,null,null,null,null,null);
+        try{
+
+        }finally {
+            cursor.close();
+        }
         FloatingActionButton listiner=(FloatingActionButton) findViewById(R.id.Click);
         listiner.setOnClickListener(new View.OnClickListener(){
 
