@@ -27,7 +27,8 @@ public class GetData extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getData();
-                finish();
+                Intent intent=new Intent(GetData.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }
