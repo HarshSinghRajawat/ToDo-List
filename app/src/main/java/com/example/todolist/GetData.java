@@ -55,12 +55,13 @@ public class GetData extends AppCompatActivity {
             values.put(entries.title, title);
             values.put(entries.Entry, description);
 
-            long newRowID = db.insert(entries.Table_Name, null, values);
-
-            if (newRowID == -1) {
+            //long newRowID = db.insert(entries.Table_Name, null, values);
+            Uri uri=getContentResolver().insert(Schema.Insert_Uri,values);
+            long status=Long.valueOf(uri.getLastPathSegment());
+            if (status == -1) {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "New Activity Added: " + newRowID, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "New Activity Added: " + status, Toast.LENGTH_SHORT).show();
             }
         }
 

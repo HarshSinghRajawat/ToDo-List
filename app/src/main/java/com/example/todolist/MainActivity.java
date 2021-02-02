@@ -3,10 +3,13 @@ package com.example.todolist;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +36,28 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Data> list=new ArrayList<Data>();
         list.add(new Data(title,des));*/
 
+
+//=========================Test============================
+/*
+        String[] projection={Schema.entries._ID, Schema.entries.title, Schema.entries.Entry};
+        ArrayList<Data> list=new ArrayList<Data>();
+
+        DbContentProvider contentProvider=new DbContentProvider();
+        Cursor cursor =getContentResolver().query(Schema.Content_Uri, projection,  null,null,null);
+
+
+        try{
+            cursor.moveToFirst();
+            int titleColumnIndex = cursor.getColumnIndex(Schema.entries.title);
+            int desColumnIndex = cursor.getColumnIndex(Schema.entries.Entry);
+            list.add(new Data(cursor.getString(titleColumnIndex), cursor.getString(desColumnIndex)));
+
+        }finally {
+            cursor.close();
+        }
+        //display(list);
+//=========================Test============================
+*/
 
 
         ToDoAsyncTask task=new ToDoAsyncTask();
@@ -64,10 +89,15 @@ public class MainActivity extends AppCompatActivity {
 
 
             DataHelper helper=new DataHelper(MainActivity.this);
+
             SQLiteDatabase db=helper.getReadableDatabase();
-            Cursor cursor=db.query(Schema.entries.Table_Name,projection,null,null,null,null,null);
+            DbContentProvider contentProvider=new DbContentProvider();
+
+                Cursor cursor = getContentResolver().query(Schema.Content_Uri, projection,  null,null,null);
+
 
             try{
+
                 while(cursor.moveToNext()){
                     int titleColumnIndex = cursor.getColumnIndex(Schema.entries.title);
                     int desColumnIndex = cursor.getColumnIndex(Schema.entries.Entry);
