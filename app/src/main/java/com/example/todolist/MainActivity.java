@@ -32,36 +32,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*String title,des;
-        ArrayList<Data> list=new ArrayList<Data>();
-        list.add(new Data(title,des));*/
 
-
-//=========================Test============================
-/*
         String[] projection={Schema.entries._ID, Schema.entries.title, Schema.entries.Entry};
-        ArrayList<Data> list=new ArrayList<Data>();
-
-        DbContentProvider contentProvider=new DbContentProvider();
-        Cursor cursor =getContentResolver().query(Schema.Content_Uri, projection,  null,null,null);
 
 
-        try{
-            cursor.moveToFirst();
-            int titleColumnIndex = cursor.getColumnIndex(Schema.entries.title);
-            int desColumnIndex = cursor.getColumnIndex(Schema.entries.Entry);
-            list.add(new Data(cursor.getString(titleColumnIndex), cursor.getString(desColumnIndex)));
-
-        }finally {
-            cursor.close();
-        }
-        //display(list);
-//=========================Test============================
-*/
-
-
-        ToDoAsyncTask task=new ToDoAsyncTask();
-        task.execute();
+        Cursor cursor = getContentResolver().query(Schema.Content_Uri, projection,  null,null,null);
+        display(cursor);
 
 
         FloatingActionButton listiner=(FloatingActionButton) findViewById(R.id.Click);
@@ -71,48 +47,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,GetData.class);
                 startActivity(intent);
-                //insert();displayDBInfo();
             }
         });
     }
 
-    protected class ToDoAsyncTask extends AsyncTask<Void,Void,ArrayList<Data>>{
-        @Override
-        protected void onPostExecute(ArrayList<Data> data) {
-            display(data);
-        }
 
-        @Override
-        protected ArrayList<Data> doInBackground(Void... voids) {
-            ArrayList<Data> list=new ArrayList<Data>();
-            String[] projection={Schema.entries._ID, Schema.entries.title, Schema.entries.Entry};
+    private void display(Cursor data){
 
-
-            DataHelper helper=new DataHelper(MainActivity.this);
-
-            SQLiteDatabase db=helper.getReadableDatabase();
-            DbContentProvider contentProvider=new DbContentProvider();
-
-                Cursor cursor = getContentResolver().query(Schema.Content_Uri, projection,  null,null,null);
-
-
-            try{
-
-                while(cursor.moveToNext()){
-                    int titleColumnIndex = cursor.getColumnIndex(Schema.entries.title);
-                    int desColumnIndex = cursor.getColumnIndex(Schema.entries.Entry);
-                    list.add(new Data(cursor.getString(titleColumnIndex), cursor.getString(desColumnIndex)));
-                }
-            }finally {
-                cursor.close();
-            }
-            return list;
-        }
-    }
-
-    private void display(ArrayList<Data> data){
-        ToDoAdapter adapter=new ToDoAdapter(MainActivity.this,data);
         ListView listView=(ListView)findViewById(R.id.list);
+        todoCursorAdapter adapter=new todoCursorAdapter(MainActivity.this,data);
         listView.setAdapter(adapter);
     }
 
