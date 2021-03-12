@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,29 +35,23 @@ public class GetData extends AppCompatActivity {
 
         FloatingActionButton btn=(FloatingActionButton) findViewById(R.id.submit);
         if(title!=null){
-            btn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-                    try{
-                        updateData();
-                        finish();
-                    }catch (Exception e){
-                        Toast.makeText(GetData.this,"Err Can not update Data",Toast.LENGTH_SHORT).show();
-                    }
-
+            btn.setOnClickListener(view -> {
+                try{
+                    updateData();
+                    finish();
+                }catch (Exception e){
+                    Toast.makeText(GetData.this,"Err Can not update Data",Toast.LENGTH_SHORT).show();
                 }
+
             });
             }
         else{
 
 
-            btn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
+            btn.setOnClickListener(view -> {
 
-                    getData();
-                    finish();
-                }
+                getData();
+                finish();
             });
         }
     }

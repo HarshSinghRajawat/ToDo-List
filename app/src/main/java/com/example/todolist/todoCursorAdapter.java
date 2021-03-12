@@ -35,29 +35,23 @@ public class todoCursorAdapter extends CursorAdapter{
         String body=cursor.getString(cursor.getColumnIndexOrThrow(Schema.entries.Entry));
         String _id=cursor.getString(cursor.getColumnIndexOrThrow(Schema.entries._ID));
 
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String[] id= {_id};
+        remove.setOnClickListener(view1 -> {
+            String[] id= {_id};
 
-                view.getContext().getContentResolver().delete(Schema.Del_Id,Schema.entries._ID+"=?",id);
-                Toast.makeText(view.getContext(),"Well Done!!",Toast.LENGTH_SHORT).show();
-                notifyDataSetChanged();
+            view1.getContext().getContentResolver().delete(Schema.Del_Id,Schema.entries._ID+"=?",id);
+            Toast.makeText(view1.getContext(),"Well Done!!",Toast.LENGTH_SHORT).show();
+            notifyDataSetChanged();
 
 
-            }
         });
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent intent=new Intent(view.getContext(),GetData.class);
-                intent.putExtra("title",priority);
-                intent.putExtra("body",body);
+        view.setOnLongClickListener(view12 -> {
+            Intent intent=new Intent(view12.getContext(),GetData.class);
+            intent.putExtra("title",priority);
+            intent.putExtra("body",body);
 
-                intent.putExtra("Id",_id);
-                view.getContext().startActivity(intent);
-                return true;
-            }
+            intent.putExtra("Id",_id);
+            view12.getContext().startActivity(intent);
+            return true;
         });
 
 

@@ -16,7 +16,6 @@ import android.util.Log;
 public class DbContentProvider extends ContentProvider {
 
     /** Tag for the log messages */
-    public static final String LOG_TAG = DbContentProvider.class.getSimpleName();
     private DataHelper mhelper;
 
 

@@ -1,10 +1,8 @@
 package com.example.todolist;
 import com.example.todolist.Schema.entries;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
 
 public class DataHelper extends SQLiteOpenHelper {
     private static final String DatabaseName="Test.db";
