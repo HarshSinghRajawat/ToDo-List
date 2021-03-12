@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class todoCursorAdapter extends CursorAdapter{
         TextView title=(TextView) view.findViewById(R.id.title);
         TextView des=(TextView) view.findViewById(R.id.des);
         CheckBox remove=view.findViewById(R.id.checkBox);
+        ImageView img=view.findViewById(R.id.img);
 
         String priority=cursor.getString(cursor.getColumnIndexOrThrow(Schema.entries.title));
         String body=cursor.getString(cursor.getColumnIndexOrThrow(Schema.entries.Entry));
@@ -58,6 +60,7 @@ public class todoCursorAdapter extends CursorAdapter{
 
 
 
+        img.setImageResource(R.mipmap.ic_list_round);
         title.setText(priority);
         des.setText(body);
 
