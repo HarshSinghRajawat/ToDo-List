@@ -27,12 +27,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mEmptyStateTextView;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
+    protected void onStart() {
+        super.onStart();
         String[] projection={Schema.entries._ID, Schema.entries.title, Schema.entries.Entry};
 
 
@@ -48,9 +46,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,GetData.class);
                 startActivity(intent);
-                finish();
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+
     }
 
 

@@ -41,8 +41,6 @@ public class GetData extends AppCompatActivity {
                 public void onClick(View view) {
                     try{
                         updateData();
-                        Intent intent=new Intent(GetData.this,MainActivity.class);
-                        startActivity(intent);
                         finish();
                     }catch (Exception e){
                         Toast.makeText(GetData.this,"Err Can not update Data",Toast.LENGTH_SHORT).show();
@@ -59,8 +57,6 @@ public class GetData extends AppCompatActivity {
                 public void onClick(View view) {
 
                     getData();
-                    Intent intent=new Intent(GetData.this,MainActivity.class);
-                    startActivity(intent);
                     finish();
                 }
             });

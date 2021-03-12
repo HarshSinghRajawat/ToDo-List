@@ -22,6 +22,7 @@ public class todoCursorAdapter extends CursorAdapter{
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
+
     }
 
     @Override
@@ -42,6 +43,7 @@ public class todoCursorAdapter extends CursorAdapter{
                 view.getContext().getContentResolver().delete(Schema.Del_Id,Schema.entries._ID+"=?",id);
                 Toast.makeText(view.getContext(),"Well Done!!",Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
+
 
             }
         });
