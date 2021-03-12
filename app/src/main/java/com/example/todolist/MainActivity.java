@@ -26,7 +26,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    private TextView mEmptyStateTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         Cursor cursor = getContentResolver().query(Schema.Content_Uri, projection,  null,null,null);
-        display(cursor);
 
+
+        display(cursor);
 
         FloatingActionButton listiner=(FloatingActionButton) findViewById(R.id.Click);
         listiner.setOnClickListener(new View.OnClickListener(){
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,GetData.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         ListView listView=(ListView)findViewById(R.id.list);
         todoCursorAdapter adapter=new todoCursorAdapter(MainActivity.this,data);
         listView.setAdapter(adapter);
+
     }
 
 

@@ -15,6 +15,8 @@ public final class Schema {
     public static final Uri Content_Uri=Uri.withAppendedPath(Base_Content_Uri,"GetData");
     public static final Uri Insert_Uri=Uri.withAppendedPath(Base_Content_Uri,"Insert");
     public static final Uri GetId=Uri.withAppendedPath(Base_Content_Uri,"GetData/Id");
+    public static final Uri Update_Id =Uri.withAppendedPath(Base_Content_Uri,"Insert/Id");
+    public static final Uri Del_Id=Uri.withAppendedPath(Base_Content_Uri,"Del/Id");
 
     public static final class entries implements BaseColumns{
         public static final String Table_Name= "TestDatabase";

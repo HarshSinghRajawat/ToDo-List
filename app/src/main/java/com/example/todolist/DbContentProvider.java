@@ -8,7 +8,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.strictmode.SqliteObjectLeakedViolation;
+import android.util.Log;
 
 /**
  * {@link ContentProvider} for Pets app.
@@ -23,6 +23,8 @@ public class DbContentProvider extends ContentProvider {
     public static final int GetTable=100;
     public static final int Get_Id=101;
     public static final int Insert=102;
+    public static final int Edit=103;
+    public static final int Del=104;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -38,6 +40,8 @@ public class DbContentProvider extends ContentProvider {
         sUriMatcher.addURI(Schema.Content_Authority,"GetData",GetTable);
         sUriMatcher.addURI(Schema.Content_Authority,"Insert",Insert);
         sUriMatcher.addURI(Schema.Content_Authority,"GetData/Id",Get_Id);
+        sUriMatcher.addURI(Schema.Content_Authority,"Insert/Id",Edit);
+        sUriMatcher.addURI(Schema.Content_Authority,"Del/Id",Del);
 
         // The content URI of the form "content://com.example.android.pets/pets/#" will map to the
         // integer code {@link #PETS_ID}. This URI is used to provide access to ONE single row
@@ -101,6 +105,8 @@ public class DbContentProvider extends ContentProvider {
                     getContext().getContentResolver().notifyChange(InsertUri,null);
                 }
                 break;
+
+
             default:
                 throw new SQLException("Failed To Insert Row Into "+uri);
 
@@ -114,7 +120,23 @@ public class DbContentProvider extends ContentProvider {
      */
     @Override
     public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
-        return 0;
+        int status ;
+        final SQLiteDatabase db=mhelper.getWritableDatabase();
+        switch (sUriMatcher.match(uri)){
+            case Edit:
+                status =db.update(Schema.entries.Table_Name,contentValues,selection,selectionArgs);
+                if(status>0) {
+                    Log.i("Test", "Updated");
+
+                    getContext().getContentResolver().notifyChange(ContentUris.withAppendedId(Schema.Update_Id,status),null);
+
+                }
+                break;
+            default:
+                throw new SQLException("Failed To Update Row Into "+uri);
+
+        }
+        return status;
     }
 
     /**
@@ -122,7 +144,22 @@ public class DbContentProvider extends ContentProvider {
      */
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        int status ;
+        final SQLiteDatabase db=mhelper.getWritableDatabase();
+        switch (sUriMatcher.match(uri)){
+            case Del:
+                status =db.delete(Schema.entries.Table_Name,selection,selectionArgs);
+                if(status>0) {
+                    Log.i("Test", "Deleted");
+
+                    getContext().getContentResolver().notifyChange(ContentUris.withAppendedId(Schema.Del_Id,status),null);
+                }
+                break;
+            default:
+                throw new SQLException("Failed To Update Row Into "+uri);
+
+        }
+        return status;
     }
 
     /**
